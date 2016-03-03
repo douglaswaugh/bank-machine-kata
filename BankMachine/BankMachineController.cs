@@ -7,12 +7,10 @@ namespace BankMachine
     public class BankMachineController
     {
         private readonly Transactions _transactions;
-        private readonly PrintFormatter _printFormatter;
 
-        public BankMachineController(Transactions transactions, PrintFormatter printFormatter)
+        public BankMachineController(Transactions transactions)
         {
             _transactions = transactions;
-            _printFormatter = printFormatter;
         }
 
         public void Deposit(Deposit deposit)
@@ -22,7 +20,7 @@ namespace BankMachine
 
         public void PrintStatement()
         {
-            _printFormatter.Format(_transactions);
+            _transactions.Print();
         }
     }
 
@@ -31,24 +29,21 @@ namespace BankMachine
     {
         private BankMachineController _bankMachineController;
         private Transactions _transactions;
-        private PrintFormatter _printFormatter;
 
         [SetUp]
         public void SetUp()
         {
             _transactions = Substitute.For<Transactions>();
 
-            _printFormatter = Substitute.For<PrintFormatter>();
-
-            _bankMachineController = new BankMachineController(_transactions, _printFormatter);   
+            _bankMachineController = new BankMachineController(_transactions);   
         }
 
         [Test]
         public void Should_accept_deposit_requests()
         {
-            _bankMachineController.Deposit(new Deposit(new DateTime(2016, 3, 2), 20));
+            _bankMachineController.Deposit(new Deposit(new DateTime(2016, 3, 2), new Money(20)));
 
-            _transactions.Received().Add(new Deposit(new DateTime(2016, 3, 2), 20));
+            _transactions.Received().Add(new Deposit(new DateTime(2016, 3, 2), new Money(20)));
         }
 
         [Test]
@@ -56,7 +51,7 @@ namespace BankMachine
         {
             _bankMachineController.PrintStatement();
 
-            _printFormatter.Received().Format(_transactions);
+            _transactions.Received().Print();
         }
     }
 }

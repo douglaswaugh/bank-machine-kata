@@ -5,22 +5,25 @@ namespace BankMachine
     public class Deposit : Transaction
     {
         private readonly DateTime _date;
-        private readonly int _amount;
+        private readonly Money _money;
 
-        public Deposit(DateTime date, int amount)
+        public Deposit(DateTime date, Money money)
         {
             _date = date;
-            _amount = amount;
+            _money = money;
         }
 
+        public void Print(Printer printer, ref Money balance)
+        {
+            balance = _money.Plus(balance);
+
+            printer.Print(string.Format("{0} DEPOSIT £{1} £{2}", _date.ToShortDateString(), _money, balance));
+        }
+
+        #region Equality
         protected bool Equals(Deposit other)
         {
-            return _amount == other._amount && _date.Equals(other._date);
-        }
-
-        public void Print(PrintFormatter printFormatter)
-        {
-            printFormatter.Print(string.Format("{0} DEPOSIT £{1} £{2}", _date.ToShortDateString(), _amount, _amount));
+            return _date.Equals(other._date) && Equals(_money, other._money);
         }
 
         public override bool Equals(object obj)
@@ -35,8 +38,9 @@ namespace BankMachine
         {
             unchecked
             {
-                return (_amount*397) ^ _date.GetHashCode();
+                return (_date.GetHashCode()*397) ^ (_money != null ? _money.GetHashCode() : 0);
             }
         }
+        #endregion
     }
 }
