@@ -39,7 +39,7 @@ namespace BankMachine
 
             printFormatter.Format(transactions);
 
-            printer.Received().Print(string.Format("15/12/2015 DEPOSIT £20 £20"));
+            printer.Received().Print("15/12/2015 DEPOSIT £20 £20");
         }
     }
 }
