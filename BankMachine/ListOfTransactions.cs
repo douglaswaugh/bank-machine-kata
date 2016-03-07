@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -23,12 +24,7 @@ namespace BankMachine
 
         public void Print()
         {
-            var balance = new Money(0);
-
-            foreach (var transaction in _transactions)
-            {
-                balance = transaction.Print(_printer, balance);
-            }
+            _transactions.Aggregate(new Money(0), (current, transaction) => transaction.Print(_printer, current));
         }
     }
 
