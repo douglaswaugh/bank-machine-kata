@@ -2,6 +2,6 @@
 {
     public interface Transaction
     {
-        void Print(Printer printFormatter, ref Money balance);
+        Money Print(Printer printFormatter, Money balance);
     }
 }

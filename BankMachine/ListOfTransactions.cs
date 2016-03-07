@@ -27,7 +27,7 @@ namespace BankMachine
 
             foreach (var transaction in _transactions)
             {
-                transaction.Print(_printer, ref balance);
+                balance = transaction.Print(_printer, balance);
             }
         }
     }

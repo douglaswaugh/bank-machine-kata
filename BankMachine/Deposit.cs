@@ -13,11 +13,13 @@ namespace BankMachine
             _money = money;
         }
 
-        public void Print(Printer printer, ref Money balance)
+        public Money Print(Printer printer, Money balance)
         {
             balance = _money.Plus(balance);
 
             printer.Print(string.Format("{0} DEPOSIT £{1} £{2}", _date.ToShortDateString(), _money, balance));
+
+            return balance;
         }
 
         #region Equality
