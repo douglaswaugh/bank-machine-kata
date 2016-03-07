@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BankMachineController.cs" />
+    <Compile Include="BankMachine.cs" />
     <Compile Include="Deposit.cs" />
     <Compile Include="ListOfTransactions.cs" />
     <Compile Include="Printer.cs" />
