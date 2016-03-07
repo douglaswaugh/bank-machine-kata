@@ -20,7 +20,7 @@ namespace BankMachine
 
         public void PrintStatement()
         {
-            _transactions.Print();
+            _transactions.PrintStatement();
         }
     }
 
@@ -51,7 +51,7 @@ namespace BankMachine
         {
             _bankMachine.PrintStatement();
 
-            _transactions.Received().Print();
+            _transactions.Received().PrintStatement();
         }
     }
 }

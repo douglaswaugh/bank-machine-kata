@@ -2,6 +2,6 @@
 {
     public interface Transaction
     {
-        Money Print(Printer printFormatter, Money balance);
+        Money AddTo(Statement statement, Money balance);
     }
 }

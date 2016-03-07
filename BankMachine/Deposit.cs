@@ -13,11 +13,11 @@ namespace BankMachine
             _money = money;
         }
 
-        public Money Print(Printer printer, Money balance)
+        public Money AddTo(Statement statement, Money balance)
         {
-            balance = _money.Plus(balance);
+            balance = balance.Plus(_money);
 
-            printer.Print(string.Format("{0} DEPOSIT £{1} £{2}", _date.ToShortDateString(), _money, balance));
+            statement.AddStatementLine(string.Format(@"{0}\t{1}\t£{2}\t£{3}", _date.ToShortDateString(), "DEPOSIT", _money, balance));
 
             return balance;
         }
