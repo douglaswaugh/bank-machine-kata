@@ -6,12 +6,12 @@ using NUnit.Framework;
 
 namespace BankMachine
 {
-    public class StringStatement : Statement
+    public class StandardStatement : Statement
     {
         private readonly List<string> _lines;
         private readonly Printer _printer;
 
-        public StringStatement(Printer printer)
+        public StandardStatement(Printer printer)
         {
             _printer = printer;
             _lines = new List<string>();
@@ -48,7 +48,7 @@ namespace BankMachine
         {
             var printer = Substitute.For<Printer>();
 
-            var transactions = new StringStatement(printer);
+            var transactions = new StandardStatement(printer);
 
             transactions.AddTransactions(new List<Transaction>
             {
@@ -65,7 +65,7 @@ namespace BankMachine
         {
             var printer = Substitute.For<Printer>();
 
-            var transactions = new StringStatement(printer);
+            var transactions = new StandardStatement(printer);
 
             transactions.AddTransactions(new List<Transaction>
             {
