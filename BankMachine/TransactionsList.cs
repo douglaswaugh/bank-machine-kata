@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 namespace BankMachine
 {
-    public class TransactionList : Transactions
+    public class TransactionsList : Transactions
     {
         private readonly List<Transaction> _transactions;
         private readonly Statement _statement;
 
-        public TransactionList(Statement statement)
+        public TransactionsList(Statement statement)
         {
             _statement = statement;
             _transactions = new List<Transaction>();

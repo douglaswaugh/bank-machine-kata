@@ -48,7 +48,7 @@
   <ItemGroup>
     <Compile Include="BankMachine.cs" />
     <Compile Include="Deposit.cs" />
-    <Compile Include="TransactionList.cs" />
+    <Compile Include="TransactionsList.cs" />
     <Compile Include="Money.cs" />
     <Compile Include="Printer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
