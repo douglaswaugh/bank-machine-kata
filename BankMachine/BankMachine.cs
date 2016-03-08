@@ -6,21 +6,21 @@ namespace BankMachine
 {
     public class BankMachine
     {
-        private readonly Transactions _transactions;
+        private readonly Account _account;
 
-        public BankMachine(Transactions transactions)
+        public BankMachine(Account account)
         {
-            _transactions = transactions;
+            _account = account;
         }
 
         public void Deposit(Deposit deposit)
         {
-            _transactions.Add(deposit);
+            _account.Add(deposit);
         }
 
         public void PrintStatement()
         {
-            _transactions.PrintStatement();
+            _account.PrintStatement();
         }
     }
 
@@ -28,14 +28,14 @@ namespace BankMachine
     public class BankMachineTests
     {
         private BankMachine _bankMachine;
-        private Transactions _transactions;
+        private Account _account;
 
         [SetUp]
         public void SetUp()
         {
-            _transactions = Substitute.For<Transactions>();
+            _account = Substitute.For<Account>();
 
-            _bankMachine = new BankMachine(_transactions);
+            _bankMachine = new BankMachine(_account);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace BankMachine
         {
             _bankMachine.Deposit(new Deposit(new DateTime(2016, 3, 2), new Money(20)));
 
-            _transactions.Received().Add(new Deposit(new DateTime(2016, 3, 2), new Money(20)));
+            _account.Received().Add(new Deposit(new DateTime(2016, 3, 2), new Money(20)));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace BankMachine
         {
             _bankMachine.PrintStatement();
 
-            _transactions.Received().PrintStatement();
+            _account.Received().PrintStatement();
         }
     }
 }
