@@ -18,7 +18,7 @@ namespace BankMachine
 
         public void PrintStatement(Statement statement)
         {
-            statement.AddTransactions(this);
+            statement.Prepare(this);
 
             statement.Print();
         }

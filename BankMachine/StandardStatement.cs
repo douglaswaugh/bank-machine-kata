@@ -22,7 +22,7 @@ namespace BankMachine
             _lines.Add(line);
         }
 
-        public void AddTransactions(Account account)
+        public void Prepare(Account account)
         {
             var balance = new Money(0);
 
@@ -55,7 +55,7 @@ namespace BankMachine
 
             var statement = new StandardStatement(printer);
 
-            statement.AddTransactions(account);
+            statement.Prepare(account);
 
             statement.Print();
 
@@ -75,7 +75,7 @@ namespace BankMachine
 
             var statement = new StandardStatement(printer);
 
-            statement.AddTransactions(account);
+            statement.Prepare(account);
 
             statement.Print();
 
