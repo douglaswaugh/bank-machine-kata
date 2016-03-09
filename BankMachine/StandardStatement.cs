@@ -22,11 +22,11 @@ namespace BankMachine
             _lines.Add(line);
         }
 
-        public void AddTransactions(List<Transaction> transactions)
+        public void AddTransactions(Account account)
         {
             var balance = new Money(0);
 
-            foreach (var transaction in transactions)
+            foreach (var transaction in account.Transactions)
             {
                 balance = transaction.AddTo(this, balance);
             }
@@ -47,15 +47,17 @@ namespace BankMachine
         public void Should_print_statement_with_one_transaction()
         {
             var printer = Substitute.For<Printer>();
-
-            var transactions = new StandardStatement(printer);
-
-            transactions.AddTransactions(new List<Transaction>
+            var account = Substitute.For<Account>();
+            account.Transactions.Returns(new List<Transaction>
             {
                 new Deposit(new DateTime(2015, 12, 15), new Money(20))
             });
 
-            transactions.Print();
+            var statement = new StandardStatement(printer);
+
+            statement.AddTransactions(account);
+
+            statement.Print();
 
             printer.Received().Print(@"date\t\t\tamount\tbalance\t\n15/12/2015\tDEPOSIT\t£20\t£20\n");
         }
@@ -64,16 +66,18 @@ namespace BankMachine
         public void Should_print_statement_with_multiple_transactions()
         {
             var printer = Substitute.For<Printer>();
-
-            var transactions = new StandardStatement(printer);
-
-            transactions.AddTransactions(new List<Transaction>
+            var account = Substitute.For<Account>();
+            account.Transactions.Returns(new List<Transaction>
             {
                 new Deposit(new DateTime(2015, 12, 15), new Money(20)),
                 new Deposit(new DateTime(2015, 12, 16), new Money(30))
             });
 
-            transactions.Print();
+            var statement = new StandardStatement(printer);
+
+            statement.AddTransactions(account);
+
+            statement.Print();
 
             printer.Received().Print(@"date\t\t\tamount\tbalance\t\n15/12/2015\tDEPOSIT\t£20\t£20\n16/12/2015\tDEPOSIT\t£30\t£50\n");
         }

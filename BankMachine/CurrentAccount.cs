@@ -4,21 +4,21 @@ namespace BankMachine
 {
     public class CurrentAccount : Account
     {
-        private readonly List<Transaction> _transactions;
-
         public CurrentAccount()
         {
-            _transactions = new List<Transaction>();
+            Transactions = new List<Transaction>();
         }
+
+        public ICollection<Transaction> Transactions { get; private set; } 
 
         public void Add(Transaction deposit)
         {
-            _transactions.Add(deposit);
+            Transactions.Add(deposit);
         }
 
         public void PrintStatement(Statement statement)
         {
-            statement.AddTransactions(_transactions);
+            statement.AddTransactions(this);
 
             statement.Print();
         }
