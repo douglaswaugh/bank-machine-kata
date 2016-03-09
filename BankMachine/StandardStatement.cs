@@ -22,7 +22,7 @@ namespace BankMachine
             _lines.Add(line);
         }
 
-        public void Prepare(Account account)
+        public void Print(Account account)
         {
             var balance = new Money(0);
 
@@ -30,10 +30,7 @@ namespace BankMachine
             {
                 balance = transaction.AddTo(this, balance);
             }
-        }
 
-        public void Print()
-        {
             string statement = _lines.Aggregate(string.Empty, (current, line) => current + line + @"\n");
 
             _printer.Print(string.Format(@"date\t\t\tamount\tbalance\t\n{0}", statement));
@@ -55,9 +52,7 @@ namespace BankMachine
 
             var statement = new StandardStatement(printer);
 
-            statement.Prepare(account);
-
-            statement.Print();
+            statement.Print(account);
 
             printer.Received().Print(@"date\t\t\tamount\tbalance\t\n15/12/2015\tDEPOSIT\t£20\t£20\n");
         }
@@ -75,9 +70,7 @@ namespace BankMachine
 
             var statement = new StandardStatement(printer);
 
-            statement.Prepare(account);
-
-            statement.Print();
+            statement.Print(account);
 
             printer.Received().Print(@"date\t\t\tamount\tbalance\t\n15/12/2015\tDEPOSIT\t£20\t£20\n16/12/2015\tDEPOSIT\t£30\t£50\n");
         }

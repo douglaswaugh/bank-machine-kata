@@ -7,12 +7,12 @@ namespace BankMachine
     public class BankMachine
     {
         private readonly Account _account;
-        private readonly Printer _printer;
+        private readonly Statement _statement;
 
-        public BankMachine(Account account, Printer printer)
+        public BankMachine(Account account, Statement statement)
         {
             _account = account;
-            _printer = printer;
+            _statement = statement;
         }
 
         public void Deposit(Deposit deposit)
@@ -22,7 +22,7 @@ namespace BankMachine
 
         public void PrintStatement()
         {
-            _account.PrintStatement(new StandardStatement(_printer));
+            _statement.Print(_account);
         }
     }
 
@@ -31,15 +31,15 @@ namespace BankMachine
     {
         private BankMachine _bankMachine;
         private Account _account;
-        private Printer _printer;
+        private Statement _statement;
 
         [SetUp]
         public void SetUp()
         {
             _account = Substitute.For<Account>();
-            _printer = Substitute.For<Printer>();
+            _statement = Substitute.For<Statement>();
 
-            _bankMachine = new BankMachine(_account, _printer);
+            _bankMachine = new BankMachine(_account, _statement);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace BankMachine
         {
             _bankMachine.PrintStatement();
 
-            _account.Received().PrintStatement(Arg.Any<Statement>());
+            _statement.Received().Print(Arg.Any<Account>());
         }
     }
 }

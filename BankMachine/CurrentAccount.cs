@@ -15,12 +15,5 @@ namespace BankMachine
         {
             Transactions.Add(deposit);
         }
-
-        public void PrintStatement(Statement statement)
-        {
-            statement.Prepare(this);
-
-            statement.Print();
-        }
     }
 }
