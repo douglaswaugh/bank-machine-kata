@@ -8,7 +8,7 @@ namespace BankMachine
 {
     public class StandardStatement : Statement
     {
-        private readonly List<string> _lines;
+        private readonly ICollection<string> _lines;
         private readonly Printer _printer;
 
         public StandardStatement(Printer printer)
@@ -22,14 +22,19 @@ namespace BankMachine
             _lines.Add(line);
         }
 
-        public void Print(Account account)
+        public void AddTransactions(ICollection<Transaction> transactions)
         {
             var balance = new Money(0);
 
-            foreach (var transaction in account.Transactions)
+            foreach (var transaction in transactions)
             {
                 balance = transaction.AddTo(this, balance);
             }
+        }
+
+        public void Print(Account account)
+        {
+            account.AddTransactionsTo(this);
 
             string statement = _lines.Aggregate(string.Empty, (current, line) => current + line + @"\n");
 
@@ -45,12 +50,12 @@ namespace BankMachine
         {
             var printer = Substitute.For<Printer>();
             var account = Substitute.For<Account>();
-            account.Transactions.Returns(new List<Transaction>
+
+            var statement = new StandardStatement(printer);
+            statement.AddTransactions(new List<Transaction>
             {
                 new Deposit(new DateTime(2015, 12, 15), new Money(20))
             });
-
-            var statement = new StandardStatement(printer);
 
             statement.Print(account);
 
@@ -62,13 +67,13 @@ namespace BankMachine
         {
             var printer = Substitute.For<Printer>();
             var account = Substitute.For<Account>();
-            account.Transactions.Returns(new List<Transaction>
+
+            var statement = new StandardStatement(printer);
+            statement.AddTransactions(new List<Transaction>
             {
                 new Deposit(new DateTime(2015, 12, 15), new Money(20)),
                 new Deposit(new DateTime(2015, 12, 16), new Money(30))
             });
-
-            var statement = new StandardStatement(printer);
 
             statement.Print(account);
 

@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace BankMachine
+﻿namespace BankMachine
 {
     public interface Account
     {
         void Add(Transaction deposit);
-        ICollection<Transaction> Transactions { get; }
+        void AddTransactionsTo(Statement statement);
     }
 }
