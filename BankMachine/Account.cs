@@ -3,6 +3,6 @@
     public interface Account
     {
         void Add(Transaction deposit);
-        void PrintStatement();
+        void PrintStatement(Statement account);
     }
 }

@@ -5,11 +5,9 @@ namespace BankMachine
     public class CurrentAccount : Account
     {
         private readonly List<Transaction> _transactions;
-        private readonly Statement _statement;
 
-        public CurrentAccount(Statement statement)
+        public CurrentAccount()
         {
-            _statement = statement;
             _transactions = new List<Transaction>();
         }
 
@@ -18,11 +16,11 @@ namespace BankMachine
             _transactions.Add(deposit);
         }
 
-        public void PrintStatement()
+        public void PrintStatement(Statement statement)
         {
-            _statement.AddTransactions(_transactions);
+            statement.AddTransactions(_transactions);
 
-            _statement.Print();
+            statement.Print();
         }
     }
 }
